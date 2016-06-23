@@ -1,0 +1,79 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MolarMassCalculator.Resources"
+    xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting">
+
+    <LinearGradientBrush x:Key="DefaultHeaderBrush">
+        <GradientStop Offset="0" Color="SteelBlue"></GradientStop>
+        <GradientStop Offset="1" Color="LightBlue"></GradientStop>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="DefaultBorderBrush" Color="Blue"></SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="LightGray"></SolidColorBrush>
+    <Thickness x:Key="DefaultBorderThickness">2</Thickness>
+
+    <Style x:Key="CustomLegend" TargetType="datavis:Legend">
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="TitleStyle">
+            <Setter.Value>
+                <Style TargetType="datavis:Title">
+                    <Setter Property="Margin" Value="0,5,0,10" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="datavis:Legend">
+                    <Border	Background="{TemplateBinding Background}"
+				            BorderBrush="{TemplateBinding BorderBrush}"
+				            BorderThickness="{TemplateBinding BorderThickness}"
+				            Padding="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <datavis:Title 	Grid.Row="0" 
+								            x:Name="HeaderContent"
+								            Content="{TemplateBinding Header}"
+								            ContentTemplate="{TemplateBinding HeaderTemplate}"
+								            Style="{TemplateBinding TitleStyle}" />
+                            <ScrollViewer	Grid.Row="1"
+								            VerticalScrollBarVisibility="Auto"
+								            BorderThickness="0"
+								            Padding="0"
+								            IsTabStop="False">
+                                <ItemsPresenter	x:Name="Items"
+                                                Margin="10,0,10,10" />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="PieDataPointControlTemplate" TargetType="charting:PieDataPoint">
+        <Grid>
+            <Path   x:Name="Slice"
+                    Data="{TemplateBinding Geometry}"
+                    Fill="{TemplateBinding Background}"
+                    Stroke="{TemplateBinding BorderBrush}">
+                <ToolTipService.ToolTip>
+                    <StackPanel Orientation="Horizontal">
+                        <ContentControl Content="{TemplateBinding IndependentValue }"/>
+                        <ContentControl Content=" ("/>
+                        <ContentControl Content="{TemplateBinding FormattedDependentValue}"/>
+                        <ContentControl Content="%)"/>
+                    </StackPanel>
+                </ToolTipService.ToolTip>
+            </Path>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>
